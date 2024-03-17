@@ -2,6 +2,7 @@ import { MissionUtils } from "@woowacourse/mission-utils";
 class App {
   constructor() {
     this.cars = {};
+    this.carNames = [];
     this.round = 0;
   }
 
@@ -10,7 +11,7 @@ class App {
     await this.getRound();
     for (let i = 0; i < this.round; i++) {
       await this.playRound();
-      await this.printRoundResult();
+      this.printRoundResult();
     }
     await this.printWinner();
   }
@@ -24,6 +25,7 @@ class App {
         throw new Error("[ERROR] 이름은 5자 이하만 가능합니다.");
       }
       this.cars[name] = 0;
+      this.carNames.push(name);
     });
   }
 
@@ -46,19 +48,19 @@ class App {
   }
 
   async playRound() {
-    for (const name of Object.keys(this.cars)) {
+    for (const name of this.carNames) {
       await this.move(name);
     }
   }
 
   async printRoundResult() {
-    for (const name of Object.keys(this.cars)) {
+    for (const name of this.carNames) {
       MissionUtils.Console.print(`${name} : ${"-".repeat(this.cars[name])}`);
     }
   }
 
   async printWinner() {
-    const winner = Object.keys(this.cars).filter((name) => {
+    const winner = this.carNames.filter((name) => {
       return this.cars[name] === Math.max(...Object.values(this.cars));
     });
     MissionUtils.Console.print(`최종 우승자: ${winner.join(", ")}`);
