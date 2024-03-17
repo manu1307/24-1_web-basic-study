@@ -4,6 +4,7 @@ class App {
     this.cars = {};
     this.round = 0;
   }
+
   async play() {
     await this.getNames();
     await this.getRound();
@@ -11,6 +12,7 @@ class App {
       await this.playRound();
       await this.printRoundResult();
     }
+    await this.printWinner();
   }
 
   async getNames() {
@@ -39,7 +41,7 @@ class App {
   }
   async move(name) {
     if (MissionUtils.Random.pickNumberInRange(0, 9) >= 4) {
-      cars[name] += 1;
+      this.cars[name] += 1;
     }
   }
 
@@ -49,10 +51,17 @@ class App {
     }
   }
 
-  async printRoundResult(){
+  async printRoundResult() {
     for (const name of Object.keys(this.cars)) {
-      console.log(`${name}: ${"-".repeat(this.cars[name])}`);
+      MissionUtils.Console.print(`${name} : ${"-".repeat(this.cars[name])}`);
     }
+  }
+
+  async printWinner() {
+    const winner = Object.keys(this.cars).filter((name) => {
+      return this.cars[name] === Math.max(...Object.values(this.cars));
+    });
+    MissionUtils.Console.print(`최종 우승자: ${winner.join(", ")}`);
   }
 }
 
