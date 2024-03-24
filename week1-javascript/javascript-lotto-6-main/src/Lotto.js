@@ -27,7 +27,7 @@ class Lotto {
     return purchasePrice / 1000;
   }
 
-  getNumbers() {
+  printLotteryNumbers() {
     for (let i = 0; i < this.purchaseAmount; i++) {
       Console.print(MissionUtils.Random.pickUniqueNumbersInRange(1, 45, 6));
     }
