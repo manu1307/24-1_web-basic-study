@@ -10,6 +10,7 @@ class Lotto {
     this.selectedNumbers = [];
     this.winningNumbers = [];
     this.bonusNumber = 0;
+    this.correctCounts = {};
   }
 
   #validate(numbers) {
@@ -65,6 +66,21 @@ class Lotto {
     }
 
     this.bonusNumber = bonusNumber;
+  }
+
+  countCorrectNumbers(numbers, answer) {
+    return numbers.filter((number) => answer.includes(number)).length;
+  }
+
+  checkCorrectNumbers() {
+    this.selectedNumbers.forEach((numbers) => {
+      const correctCount = this.countCorrectNumbers(numbers, this.winningNumbers);
+      if (correctCount === 5 && numbers.includes(this.bonusNumber)) {
+        this.correctCounts[5.5]++;
+      } else {
+        this.correctCounts[correctCount]++;
+      }
+    });
   }
 }
 
