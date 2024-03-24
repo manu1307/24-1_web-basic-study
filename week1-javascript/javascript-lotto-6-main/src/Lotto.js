@@ -8,6 +8,7 @@ class Lotto {
     this.#numbers = numbers;
     this.purchaseAmount = this.getPurchaseAmount();
     this.selectedNumbers = [];
+    this.winningNumbers = [];
   }
 
   #validate(numbers) {
@@ -38,6 +39,19 @@ class Lotto {
       this.selectedNumbers.push(pickedNumbers);
       Console.print(pickedNumbers);
     }
+  }
+
+  getWinningNumbers() {
+    const winningNumbers =
+      MissionUtils.Console.readLineAsync("당첨 번호를 입력해 주세요.");
+
+    const winningNumbersArr = winningNumbers
+      .split(",")
+      .map((number) => parseInt(number));
+    if (winningNumbersArr.length !== 6) {
+      throw new Error("[ERROR] 당첨 번호는 6개여야 합니다.");
+    }
+    this.winningNumbers = winningNumbersArr;
   }
 }
 
