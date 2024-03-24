@@ -9,6 +9,7 @@ class Lotto {
     this.purchaseAmount = this.getPurchaseAmount();
     this.selectedNumbers = [];
     this.winningNumbers = [];
+    this.bonusNumber = 0;
   }
 
   #validate(numbers) {
@@ -52,6 +53,18 @@ class Lotto {
       throw new Error("[ERROR] 당첨 번호는 6개여야 합니다.");
     }
     this.winningNumbers = winningNumbersArr;
+  }
+
+  getBonusNumber() {
+    const bonusNumber = parseInt(
+      MissionUtils.Console.readLineAsync("보너스 번호를 입력해 주세요.")
+    );
+
+    if (bonusNumber < 1 || bonusNumber > 45) {
+      throw new Error("[ERROR] 보너스 번호는 1부터 45까지의 숫자여야 합니다.");
+    }
+
+    this.bonusNumber = bonusNumber;
   }
 }
 
