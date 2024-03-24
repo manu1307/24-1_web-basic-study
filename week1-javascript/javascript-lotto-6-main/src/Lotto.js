@@ -1,3 +1,5 @@
+import { Console, MissionUtils } from "@woowacourse/mission-utils";
+
 class Lotto {
   #numbers;
 
@@ -23,6 +25,12 @@ class Lotto {
       throw new Error("[ERROR] 로또 구입 금액은 1000원 단위여야 합니다.");
     }
     return purchasePrice / 1000;
+  }
+
+  getNumbers() {
+    for (let i = 0; i < this.purchaseAmount; i++) {
+      Console.print(MissionUtils.Random.pickUniqueNumbersInRange(1, 45, 6));
+    }
   }
 }
 
