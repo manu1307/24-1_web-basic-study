@@ -7,6 +7,7 @@ class Lotto {
     this.#validate(numbers);
     this.#numbers = numbers;
     this.purchaseAmount = this.getPurchaseAmount();
+    this.selectedNumbers = [];
   }
 
   #validate(numbers) {
@@ -29,7 +30,13 @@ class Lotto {
 
   printLotteryNumbers() {
     for (let i = 0; i < this.purchaseAmount; i++) {
-      Console.print(MissionUtils.Random.pickUniqueNumbersInRange(1, 45, 6));
+      const pickedNumbers = MissionUtils.Random.pickUniqueNumbersInRange(
+        1,
+        45,
+        6
+      );
+      this.selectedNumbers.push(pickedNumbers);
+      Console.print(pickedNumbers);
     }
   }
 }
