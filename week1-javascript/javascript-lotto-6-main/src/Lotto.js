@@ -11,6 +11,13 @@ class Lotto {
     this.winningNumbers = [];
     this.bonusNumber = 0;
     this.correctCounts = {};
+    this.lotteryResults = {
+      3: 5000,
+      4: 50000,
+      5: 1500000,
+      5.5: 30000000,
+      6: 2000000000,
+    };
   }
 
   #validate(numbers) {
@@ -73,6 +80,30 @@ class Lotto {
         this.correctCounts[correctCount]++;
       }
     });
+  }
+
+  printResult() {
+    Console.print("당첨 통계");
+    Console.print("---------");
+    Object.keys(this.correctCounts).forEach((key) => {
+      if (key < 3) return;
+      Console.print(
+        `${key}개 일치 (${this.lotteryResults[key].toLocaleString("en-US")}원) - ${
+          this.correctCounts[key]
+        }개`
+      );
+    });
+    Console.print(`총 수익률은 ${this.calculateRevenueRate()}%입니다.`);
+  }
+
+  calculateRevenueRate() {
+    const totalPrize = Object.keys(this.correctCounts).reduce((acc, key) => {
+      return acc + this.lotteryResults[key] * this.correctCounts[key];
+    }, 0);
+
+    return (((totalPrize - this.purchaseAmount * 1000) / this.purchaseAmount / 1000) * 100).toFixed(
+      2
+    );
   }
 }
 
