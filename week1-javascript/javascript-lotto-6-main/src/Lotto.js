@@ -22,9 +22,7 @@ class Lotto {
   // TODO: 추가 기능 구현
 
   getPurchaseAmount() {
-    const purchasePrice = parseInt(
-      MissionUtils.Console.readLineAsync("구입금액을 입력해 주세요.")
-    );
+    const purchasePrice = parseInt(MissionUtils.Console.readLineAsync("구입금액을 입력해 주세요."));
     if (purchasePrice % 1000 !== 0) {
       throw new Error("[ERROR] 로또 구입 금액은 1000원 단위여야 합니다.");
     }
@@ -33,23 +31,17 @@ class Lotto {
 
   printLotteryNumbers() {
     for (let i = 0; i < this.purchaseAmount; i++) {
-      const pickedNumbers = MissionUtils.Random.pickUniqueNumbersInRange(
-        1,
-        45,
-        6
-      );
-      this.selectedNumbers.push(pickedNumbers);
+      const pickedNumbers = MissionUtils.Random.pickUniqueNumbersInRange(1, 45, 6);
+      const sortedPickedNumbers = pickedNumbers.sort((a, b) => a - b);
+      this.selectedNumbers.push(sortedPickedNumbers);
       Console.print(pickedNumbers);
     }
   }
 
   getWinningNumbers() {
-    const winningNumbers =
-      MissionUtils.Console.readLineAsync("당첨 번호를 입력해 주세요.");
+    const winningNumbers = MissionUtils.Console.readLineAsync("당첨 번호를 입력해 주세요.");
 
-    const winningNumbersArr = winningNumbers
-      .split(",")
-      .map((number) => parseInt(number));
+    const winningNumbersArr = winningNumbers.split(",").map((number) => parseInt(number));
     if (winningNumbersArr.length !== 6) {
       throw new Error("[ERROR] 당첨 번호는 6개여야 합니다.");
     }
