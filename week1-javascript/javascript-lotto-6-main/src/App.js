@@ -24,22 +24,34 @@ class App {
     await this.getBonusNumber();
     await this.checkCorrectNumbers();
     this.printResult();
+    this.printRevenueRate();
+  }
+
+  printMessage(message) {
+    MissionUtils.Console.print(message);
+  }
+
+  async getInput() {
+    let input = await MissionUtils.Console.readLineAsync("숫자를 입력하세요:");
+    if (!Number(input)) {
+      this.printMessage("[ERROR] 잘못된 값입니다. 숫자를 입력하세요.");
+    }
+    return Number(input);
+  }
+
+  async printErrorWithWrongValue(message) {
+    this.printMessage(message);
+    await this.getInput();
   }
 
   async getPurchaseAmount() {
-    const purchasePrice = await MissionUtils.Console.readLineAsync(
-      "구입금액을 입력해 주세요."
-    );
-    const parsedPrice = Number(purchasePrice);
-    MissionUtils.Console.print(parsedPrice);
-    if (isNaN(purchasePrice)) {
-      throw new Error("[ERROR] 숫자가 잘못된 형식입니다.");
-    }
+    let purchasePrice = await this.getInput();
     if (purchasePrice % 1000 !== 0) {
-      throw new Error("[ERROR] 로또 구입 금액은 1000원 단위여야 합니다.");
+      this.printErrorWithWrongValue("로또 구매 금액은 1000원 단위여야 합니다.");
     }
     this.purchaseAmount = purchasePrice / 1000;
-    MissionUtils.Console.print(`${this.purchaseAmount}개를 구매했습니다.`);
+    this.printMessage(`${this.purchasePrice}`);
+    this.printMessage(`${this.purchaseAmount}개를 구매했습니다.`);
   }
 
   printLotteryNumbers(ticketCount) {
@@ -73,7 +85,6 @@ class App {
       throw new Error("[ERROR] 보너스 번호는 1부터 45까지의 숫자여야 합니다.");
     }
     this.bonusNumber = bonusNumber;
-    // MissionUtils.Console.print(`보너스 번호는 ${this.bonusNumber}입니다.`);
   }
 
   async checkCorrectNumbers() {
@@ -90,28 +101,22 @@ class App {
   }
 
   printResult() {
-    MissionUtils.Console.print("당첨 통계");
-    MissionUtils.Console.print("---------");
+    this.printMessage("당첨 통계");
+    this.printMessage("---------");
 
     Object.keys(this.result).forEach((key) => {
       if (key < 3) return;
-      if (key === "5.5") {
-        MissionUtils.Console.print(
-          `5개 일치, 보너스 볼 일치 (${this.lotteryResultTable[
-            key
-          ].toLocaleString("en-US")}원) - ${this.result[key]}개`
-        );
-        return;
-      }
-      MissionUtils.Console.print(
-        `${key}개 일치 (${this.lotteryResultTable[key].toLocaleString(
-          "en-US"
-        )}원) - ${this.result[key]}개`
-      );
+      const formattedPrice =
+        this.lotteryResultTable[key].toLocaleString("en-US");
+      this.printMessage(this.resultMessage(key, formattedPrice));
     });
-    MissionUtils.Console.print(
-      `총 수익률은 ${this.calculateRevenueRate()}%입니다.`
-    );
+  }
+
+  resultMessage(key, formattedPrice) {
+    if (key === "5.5") {
+      return `5개 일치, 보너스 볼 일치 (${formattedPrice}원) - ${this.result[key]}개`;
+    }
+    return `${key}개 일치 (${formattedPrice}원) - ${this.result[key]}개`;
   }
 
   calculateRevenueRate() {
@@ -121,7 +126,11 @@ class App {
         acc + Number(this.lotteryResultTable[key]) * Number(this.result[key])
       );
     }, 0);
-    return ((totalPrize / (this.purchaseAmount * 1000)) * 100).toFixed(2);
+    return ((totalPrize / (this.purchaseAmount * 1000)) * 100).toFixed(1);
+  }
+
+  printRevenueRate() {
+    this.printMessage(`총 수익률은 ${this.calculateRevenueRate()}%입니다.`);
   }
 }
 

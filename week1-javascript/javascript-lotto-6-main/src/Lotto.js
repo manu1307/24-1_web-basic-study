@@ -20,7 +20,7 @@ class Lotto {
   // TODO: 추가 기능 구현
 
   printTicket() {
-    MissionUtils.Console.print(this.#numbers);
+    MissionUtils.Console.print(`[${this.#numbers.join(", ")}]`);
   }
 
   checkResult(myTicket, winningTicket, bonusNumber) {
