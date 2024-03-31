@@ -1,4 +1,4 @@
-import { Console, MissionUtils } from "@woowacourse/mission-utils";
+import { MissionUtils } from "@woowacourse/mission-utils";
 
 class Lotto {
   #numbers;
@@ -19,7 +19,7 @@ class Lotto {
 
   // TODO: 추가 기능 구현
 
-  printTicket() {
+  printTicketNumbers() {
     MissionUtils.Console.print(`[${this.#numbers.join(", ")}]`);
   }
 
