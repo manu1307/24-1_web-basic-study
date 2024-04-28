@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🎱 행운의 로또</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <h1>🎱 행운의 로또</h1>
+      </header>
+      <main>
+        <section class="main-section">
+          <header class="main-header">
+            <h1>🎱 내 번호 당첨 확인 🎱</h1>
+          </header>
+          <section>
+            <label> 구입할 금액을 입력해주세요. </label>
+            <input type="text " placeholder="금액" />
+            <button>구입</button>
+          </section>
+          <section class="hidden">
+            <section class="purchased-lotto"></section>
+            <div>지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.</div>
+            
+            
+            <span>🎟️</span>
+            <section>
+              <label for="lotto-numbers"> 당첨번호 </label>
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <input type="number" id="lotto-numbers" name="lotto-numbers" />
+              <label for="bonus-number">보너스 번호</label>
+              <input type="number" name="bonus-number" id="bonus-number" />
+            </section>
+          </section>
+        </section>
+      </main>
+      <footer>Copyright 2023. woowacourse</footer>
+    </div>
+    <script type="module" src="./src/js/index.js"></script>
+  </body>
+</html>
